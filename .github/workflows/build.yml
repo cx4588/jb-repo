@@ -1,0 +1,22 @@
+name: Update Repo Index
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate Packages index
+        run: |
+          sudo apt update && sudo apt install dpkg-dev -y
+          dpkg-scanpackages debs /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+          bzip2 -c9 Packages > Packages.bz2
+      - name: Commit changes
+        run: |
+          git config user.name "github‑actions[bot]"
+          git config user.email "github‑actions[bot]@users.noreply.github.com"
+          git add Packages Packages.gz Packages.bz2
+          git commit -m "Auto update repo index"
+          git push
