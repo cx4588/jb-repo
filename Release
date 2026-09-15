@@ -1,0 +1,7 @@
+Origin: MyRepo
+Label: 自用RootHide源
+Suite: stable
+Codename: ios
+Architectures: iphoneos-arm64e
+Components: main
+Description: 个人自用越狱插件源
